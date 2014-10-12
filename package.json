@@ -1,0 +1,19 @@
+{
+  "main": "socket.js",
+  "name": "assistant-cheetahsocket",
+  "version": "1.0.0",
+  "description": "The fast socket assistant for Music Butler",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MusicButler/assistant-cheetahsocket.git"
+  },
+  "author": "Paul Varache",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MusicButler/assistant-cheetahsocket/issues"
+  },
+  "homepage": "https://github.com/MusicButler/assistant-cheetahsocket"
+}
