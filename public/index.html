@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+        <title>Cheetah webclient</title>
+        <script src="vendor/platform/platform.js"></script>
+        <link rel="import" href="./vendor/font-roboto/roboto.html">
+        <link rel="import" href="./vendor/paper-icon-button/paper-icon-button.html">
+        <link rel="import" href="./vendor/core-icons/av-icons.html">
+        <link rel="stylesheet" href="css/style.css">
+        <style>
+
+            html, body {
+                height: 100%;
+                margin: 0;
+                background-color: #E5E5E5;
+                font-family: 'RobotoDraft', sans-serif;
+                font-weight: 300;
+            }
+
+        </style>
+    </head>
+    <body unresolved touch-action="auto" ng-app="cheetah-app">
+        <div ng-controller="MainController" layout vertical class="bigone">
+            <div ng-show="!connected" flex layout horizontal center-justified>
+                <p self-centered>Your are not connected</p>
+            </div>
+            <div ng-show="connected">
+                <div layout horizontal center-justified>
+                    <paper-input type="url"></paper-input>
+                </div>
+                <div layout horizontal center-justified>
+                    <paper-icon-button icon="av:skip-previous" ng-click="previous()"></paper-icon-button>
+                    <paper-icon-button icon="av:{{playing ? 'pause' : 'play-arrow'}}" ng-click="toggle()"></paper-icon-button>
+                    <paper-icon-button icon="av:skip-next" ng-click="next()"></paper-icon-button>
+                </div>
+            </div>
+        </div>
+        <script src="http://spaceship.local:8008/socket.io/socket.io.js" id="socketScript"></script>
+        <!-- build:js js/app.js -->
+        <script src="./vendor/angular/angular.min.js"></script>
+        <script src="js/angular/modules.js"></script>
+        <script src="js/angular/controllers/mainCtrl.js"></script>
+        <script src="js/angular/services/socket.js"></script>
+        <script src="js/angular/app.js"></script>
+        <!-- endbuild -->
+    </body>
+</html>
