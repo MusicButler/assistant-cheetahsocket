@@ -17,7 +17,7 @@ module.exports = function (butler, done) {
 
     io.on('connection', (function (socket) {
         this.log('Client connected from ' + socket.handshake.address);
-        io.emit('butler:connected', {playing: butler.playing(), volume: butler.volume});
+        butler.getPlayingStatus(io.emit.bind(io, 'butler:connected'));
         socket.on('butler:toggle', butler.toggle.bind(butler));
         socket.on('butler:queue', butler.queue.bind(butler));
         socket.on('butler:nextone', butler.nextone.bind(butler));

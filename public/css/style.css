@@ -1,3 +1,47 @@
 .bigone {
     height: 100%;
 }
+#song-slider {
+    width: 100%;
+    margin-top: -16px;
+}
+.controls {
+    background-color: #B5B5B5;
+}
+paper-slider::shadow #sliderKnob {
+    margin-left: -16px;
+}
+paper-slider::shadow #sliderContainer {
+    width: 100%;
+}
+paper-slider::shadow .bar-container {
+    left: 0;
+}
+.time-info {
+    margin-top: -16px;
+}
+.time-info>span {
+    margin: 5px;
+    margin-bottom: -10px;
+}
+.playing-now {
+    width: 80vw;
+    height: 80vw;
+    border: 1px solid grey;
+    color: white;
+}
+.playing-now span:first-of-type {
+    font-weight: 300;
+}
+.playing-now span {
+    font-size: 2em;
+    font-weight: 100;
+}
+.song-details {
+    width: 50%;
+    height: 50%;
+}
+.darken {
+
+    background-color: rgba(0,0,0,0.5);
+}

@@ -8,6 +8,8 @@
         <link rel="import" href="./vendor/font-roboto/roboto.html">
         <link rel="import" href="./vendor/paper-icon-button/paper-icon-button.html">
         <link rel="import" href="./vendor/core-icons/av-icons.html">
+        <link rel="import" href="./vendor/paper-input/paper-input.html">
+        <link rel="import" href="./vendor/paper-slider/paper-slider.html">
         <link rel="stylesheet" href="css/style.css">
         <style>
 
@@ -22,18 +24,38 @@
         </style>
     </head>
     <body unresolved touch-action="auto" ng-app="cheetah-app">
-        <div ng-controller="MainController" layout vertical class="bigone">
-            <div ng-show="!connected" flex layout horizontal center-justified>
-                <p self-centered>Your are not connected</p>
+        <div ng-controller="MainController" class="bigone">
+            <div ng-if="!connected" layout horizontal center-justified>
+                <p self-center>Your are not connected</p>
             </div>
-            <div ng-show="connected">
-                <div layout horizontal center-justified>
-                    <paper-input type="url"></paper-input>
+            <div ng-if="connected" layout vertical class="bigone">
+                <div layout vertical class="infos" center-justified>
+                    <div layout horizontal center-justified>
+                        <paper-input type="url"></paper-input>
+                    </div>
+                    <div layout horizontal center-justified>
+                        <div class="playing-now" style="background-image: url('{{song.cover}}')" layout horizontal center-justified>
+                            <div layout horizontal center-justified flex class="darken">
+                                <div layout vertical self-center class="song-details">
+                                    <span self-center>{{song.title}}</span>
+                                    <span self-center>{{song.artist}}</span>
+                                    <span self-center>{{song.album}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div layout horizontal center-justified>
-                    <paper-icon-button icon="av:skip-previous" ng-click="previous()"></paper-icon-button>
-                    <paper-icon-button icon="av:{{playing ? 'pause' : 'play-arrow'}}" ng-click="toggle()"></paper-icon-button>
-                    <paper-icon-button icon="av:skip-next" ng-click="next()"></paper-icon-button>
+                <div layout vertical center-justified class="controls">
+                    <paper-slider pin max={{status.duration}} value={{status.position}} id="song-slider"></paper-slider>
+                    <div layout horizontal justified class="time-info">
+                        <span self-start>{{status.position * 1000 | date:'mm:ss'}}</span>
+                        <span self-end>{{status.duration * 1000 | date:'mm:ss'}}</span>
+                    </div>
+                    <div layout horizontal center-justified>
+                        <paper-icon-button icon="av:skip-previous" ng-click="previous()"></paper-icon-button>
+                        <paper-icon-button icon="av:{{playing ? 'pause' : 'play-arrow'}}" ng-click="toggle()" id="play-button"></paper-icon-button>
+                        <paper-icon-button icon="av:skip-next" ng-click="next()"></paper-icon-button>
+                    </div>
                 </div>
             </div>
         </div>
