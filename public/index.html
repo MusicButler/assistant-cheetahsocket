@@ -7,8 +7,10 @@
         <script src="vendor/platform/platform.js"></script>
         <link rel="import" href="./vendor/font-roboto/roboto.html">
         <link rel="import" href="./vendor/paper-icon-button/paper-icon-button.html">
+        <link rel="import" href="./vendor/paper-button/paper-button.html">
         <link rel="import" href="./vendor/core-icons/av-icons.html">
         <link rel="import" href="./vendor/paper-input/paper-input.html">
+        <link rel="import" href="./vendor/paper-toast/paper-toast.html">
         <link rel="import" href="./vendor/paper-slider/paper-slider.html">
         <link rel="stylesheet" href="css/style.css">
         <style>
@@ -31,7 +33,8 @@
             <div ng-if="connected" layout vertical class="bigone">
                 <div layout vertical class="infos" center-justified>
                     <div layout horizontal center-justified>
-                        <paper-input type="url"></paper-input>
+                        <paper-input ng-model="queue.url"></paper-input>
+                        <paper-button ng-click="playNext()">Send</paper-button>
                     </div>
                     <div layout horizontal center-justified>
                         <div class="playing-now" style="background-image: url('{{song.cover}}')" layout horizontal center-justified>
@@ -43,6 +46,13 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div layout horizontal>
+                    <div class="mini-song" ng-repeat="s in playlist" ng-class="{'selected': s.id === song.id}" ng-click="playNow($index)">
+                        <span self-center>{{s.title}}</span>
+                        <span self-center>{{s.artist}}</span>
+                        <span self-center>{{s.album}}</span>
                     </div>
                 </div>
                 <div layout vertical center-justified class="controls">
@@ -58,10 +68,12 @@
                     </div>
                 </div>
             </div>
+            <paper-toast id="message-toast" duration="{{toast.duration}}" text="{{toast.message}}"></paper-toast>
         </div>
         <script src="http://spaceship.local:8008/socket.io/socket.io.js" id="socketScript"></script>
         <!-- build:js js/app.js -->
-        <script src="./vendor/angular/angular.min.js"></script>
+        <script src="vendor/angular/angular.min.js"></script>
+        <script src="vendor/ng-polymer-elements/ng-polymer-elements.js"></script>
         <script src="js/angular/modules.js"></script>
         <script src="js/angular/controllers/mainCtrl.js"></script>
         <script src="js/angular/services/socket.js"></script>

@@ -4,6 +4,13 @@ cheetahControllers.controller("MainController", ["$scope", "Socket", function ($
     $scope.connected = false;
     $scope.song = {};
     $scope.status = {};
+    $scope.queue = {};
+    $scope.playlist = [];
+    var toast = document.querySelector("#message-toast")
+    $scope.toast = {
+        message: "Test de batard",
+        duration: 5000
+    };
     var progressInterval = null;
     $scope.toggle = function () {
         Socket.emit("butler:toggle");
@@ -31,6 +38,26 @@ cheetahControllers.controller("MainController", ["$scope", "Socket", function ($
         });
     };
     Socket.on('butler:playing', $scope.updateInfos);
+    Socket.on('butler:message', function (data) {
+        showMessage({message: data.message});
+    });
+    Socket.on('butler:added', function (data) {
+        var message = data.song.title || "A song has been";
+        message += " added to playlist";
+        showMessage({message: message});
+        $scope.$apply(function () {
+            $scope.playlist.splice(data.pos, 0, data.song);
+        });
+    });
+    Socket.on('butler:playlist', function (playlist) {
+        $scope.playlist = playlist;
+    })
+    var showMessage = function (data) {
+        $scope.$apply(function () {
+            $scope.toast.message = data.message;
+        });
+        toast.show();
+    }
     Socket.on("disconnect", function () {
         $scope.$apply(function () {
             $scope.connected = false;
@@ -51,5 +78,13 @@ cheetahControllers.controller("MainController", ["$scope", "Socket", function ($
             clearInterval(progressInterval);
             progressInterval = null;
         }
+    }
+    $scope.playNext = function () {
+        Socket.emit('butler:queue', $scope.queue);
+        $scope.queue.url = "";
+        console.log($scope.queue);
+    };
+    $scope.playNow = function (index) {
+        Socket.emit('butler:playnumber', index);
     }
 }]);

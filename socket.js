@@ -18,12 +18,14 @@ module.exports = function (butler, done) {
     io.on('connection', (function (socket) {
         this.log('Client connected from ' + socket.handshake.address);
         butler.getPlayingStatus(io.emit.bind(io, 'butler:connected'));
+        io.emit('butler:playlist', butler.playlist);
         socket.on('butler:toggle', butler.toggle.bind(butler));
         socket.on('butler:queue', butler.queue.bind(butler));
         socket.on('butler:nextone', butler.nextone.bind(butler));
         socket.on('butler:prevone', butler.prevone.bind(butler));
         socket.on('butler:volumeup', butler.volumeUp.bind(butler));
         socket.on('butler:volumedown', butler.volumeDown.bind(butler));
+        socket.on('butler:playnumber', butler.playNumber.bind(butler));
         socket.on('disconnect', function () {
             that.log('Client disconnected from ' + socket.handshake.address);
             this.removeAllListeners();
