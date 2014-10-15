@@ -6,6 +6,7 @@ cheetahControllers.controller("MainController", ["$scope", "Socket", function ($
     $scope.status = {};
     $scope.queue = {};
     $scope.playlist = [];
+    $scope.input = {};
     var toast = document.querySelector("#message-toast")
     $scope.toast = {
         message: "Test de batard",
@@ -69,7 +70,7 @@ cheetahControllers.controller("MainController", ["$scope", "Socket", function ($
             progressInterval = setInterval(function () {
                 $scope.$apply(function () {
                     $scope.status.position = Math.min($scope.status.duration, $scope.status.position + 1);
-                })
+                });
             }, 1000);
         }
     }
@@ -80,11 +81,13 @@ cheetahControllers.controller("MainController", ["$scope", "Socket", function ($
         }
     }
     $scope.playNext = function () {
-        Socket.emit('butler:queue', $scope.queue);
-        $scope.queue.url = "";
-        console.log($scope.queue);
+        Socket.emit('butler:queue', {url: $scope.input.url});
+        $scope.input.url = "";
     };
     $scope.playNow = function (index) {
         Socket.emit('butler:playnumber', index);
-    }
+    };
+    $scope.seek = function () {
+        Socket.emit('butler:seek', $scope.input.seekValue);
+    };
 }]);

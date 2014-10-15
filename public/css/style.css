@@ -1,3 +1,6 @@
+::-webkit-scrollbar {
+    display: none;
+}
 .bigone {
     height: 100%;
 }
@@ -25,12 +28,13 @@ paper-slider::shadow .bar-container {
     margin-bottom: -10px;
 }
 .playing-now {
-    min-width: 80%;
-    min-height: 80vw;
-    max-width: 80%;
-    max-height: 80vw;
+    width: 100vw;
+    height: 100vw;
+    max-width: 80vh;
+    max-height: 80vh;
     border: 1px solid grey;
     color: white;
+    background-size: cover;
 }
 .playing-now span:first-of-type {
     font-weight: 300;
@@ -40,8 +44,8 @@ paper-slider::shadow .bar-container {
     font-weight: 100;
 }
 .song-details {
-    width: 50%;
-    height: 50%;
+    min-width: 50%;
+    min-height: 50%;
 }
 .darken {
 
@@ -54,15 +58,19 @@ paper-toast {
 .mini-song {
     transition: all linear 150ms;
     width: 50px;
+    min-width: 50px;
     height: 50px;
     margin: 3px;
     border: 1px solid grey;
     font-size: 0.7em;
-}
-.mini-song:hover {
-    width: 100px;
-    height: 100px;
+    background-size: cover;
+    color: white;
 }
 .mini-song.selected {
-    border: 2px solid yellow;
+    border: 1px solid yellow;
+}
+.playlist-bar {
+    width: auto;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }

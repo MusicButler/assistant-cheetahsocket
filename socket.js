@@ -26,6 +26,7 @@ module.exports = function (butler, done) {
         socket.on('butler:volumeup', butler.volumeUp.bind(butler));
         socket.on('butler:volumedown', butler.volumeDown.bind(butler));
         socket.on('butler:playnumber', butler.playNumber.bind(butler));
+        socket.on('butler:seek', butler.seek.bind(butler));
         socket.on('disconnect', function () {
             that.log('Client disconnected from ' + socket.handshake.address);
             this.removeAllListeners();

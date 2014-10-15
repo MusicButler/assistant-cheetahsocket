@@ -24,6 +24,20 @@
             }
 
         </style>
+        <script>
+            if (!window.NG_POLYMER_ELEMENTS_EXTENDED_MAPPINGS) {
+                window.NG_POLYMER_ELEMENTS_EXTENDED_MAPPINGS = {};
+            }
+            window.NG_POLYMER_ELEMENTS_EXTENDED_MAPPINGS.paperSlider = {
+                ngChange: {
+                    event: "change"
+                },
+                ngModel: {
+                    primitive: 'immediateValue'
+                }
+            };
+
+        </script>
     </head>
     <body unresolved touch-action="auto" ng-app="cheetah-app">
         <div ng-controller="MainController" class="bigone">
@@ -33,7 +47,7 @@
             <div ng-if="connected" layout vertical class="bigone">
                 <div layout vertical class="infos" center-justified>
                     <div layout horizontal center-justified>
-                        <paper-input ng-model="queue.url"></paper-input>
+                        <paper-input ng-model="input.url" label="Search (Youtube, spotify, pleer...)"></paper-input>
                         <paper-button ng-click="playNext()">Send</paper-button>
                     </div>
                     <div layout horizontal center-justified>
@@ -48,15 +62,21 @@
                         </div>
                     </div>
                 </div>
-                <div layout horizontal>
-                    <div class="mini-song" ng-repeat="s in playlist" ng-class="{'selected': s.id === song.id}" ng-click="playNow($index)">
+                <div layout horizontal class="playlist-bar">
+                    <div class="mini-song"
+                        ng-repeat="s in playlist"
+                        ng-class="{'selected': s.id === song.id}"
+                        ng-click="playNow($index)"
+                        style="background-image: url('{{s.cover}}')">
                         <span self-center>{{s.title}}</span>
-                        <span self-center>{{s.artist}}</span>
-                        <span self-center>{{s.album}}</span>
                     </div>
                 </div>
                 <div layout vertical center-justified class="controls">
-                    <paper-slider pin max={{status.duration}} value={{status.position}} id="song-slider"></paper-slider>
+                    <paper-slider pin
+                                    max="{{status.duration}}"
+                                    value="{{status.position}}"
+                                    ng-model="input.seekValue" id="song-slider"
+                                    ng-change="seek()"></paper-slider>
                     <div layout horizontal justified class="time-info">
                         <span self-start>{{status.position * 1000 | date:'mm:ss'}}</span>
                         <span self-end>{{status.duration * 1000 | date:'mm:ss'}}</span>
